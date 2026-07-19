@@ -2,6 +2,7 @@ import yfinance as yf
 
 
 class MarketData:
+
     def get_stock_data(self, symbol, period="1mo"):
         stock = yf.Ticker(symbol)
         return stock.history(period=period)
@@ -14,3 +15,7 @@ class MarketData:
             return None
 
         return round(data["Close"].iloc[-1], 2)
+
+    def get_company_info(self, symbol):
+        stock = yf.Ticker(symbol)
+        return stock.info
