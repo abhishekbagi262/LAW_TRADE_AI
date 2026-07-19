@@ -1,7 +1,7 @@
-from backend.core.config import APP_NAME, VERSION
+from backend.market.market_data import MarketData
 
-print("=" * 50)
-print(APP_NAME)
-print(f"Version: {VERSION}")
-print("=" * 50)
-print("System initialized successfully.")
+market = MarketData()
+
+data = market.get_stock_data("RELIANCE.NS")
+
+print(data.tail())
