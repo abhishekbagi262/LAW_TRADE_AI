@@ -65,7 +65,15 @@ if st.button("Analyze Stock"):
         col3.metric("P/E Ratio", info.get("trailingPE", "N/A"))
         col4.metric("EPS", f"₹{info.get('trailingEps', 'N/A')}")
 
-
+        st.header("📈 Price Chart")
+        chart_data = market.get_stock_data(
+            symbol,
+            period="6mo"
+        )
+        if not chart_data.empty:
+            chart_data = chart_data[["Close"]].copy()
+            chart_data.index = chart_data.index.tz_localize(None)
+            st.line_chart(chart_data)
         st.header("📊 Fundamental Analysis")
 
         col1, col2, col3 = st.columns(3)
