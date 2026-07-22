@@ -53,4 +53,9 @@ class MarketData:
         stock = yf.Ticker(symbol)
         info = stock.info
 
-        return info.get("trailingPE")
+        return info.get("trailingPE")    
+    def get_eps(self, symbol):
+        stock = yf.Ticker(symbol)
+        info = stock.info
+
+        return info.get("trailingEps")
