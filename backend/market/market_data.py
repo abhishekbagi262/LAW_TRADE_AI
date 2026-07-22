@@ -16,6 +16,24 @@ class MarketData:
 
         return round(data["Close"].iloc[-1], 2)
 
+    def get_day_change(self, symbol):
+        stock = yf.Ticker(symbol)
+        data = stock.history(period="5d")
+
+        data = data.dropna(subset=["Close"])
+
+        if len(data) < 2:
+            return None
+
+        previous_close = data["Close"].iloc[-2]
+        current_close = data["Close"].iloc[-1]
+
+        change_percent = (
+            (current_close - previous_close) / previous_close
+        ) * 100
+
+        return round(float(change_percent), 2)
+
     def get_company_info(self, symbol):
         stock = yf.Ticker(symbol)
         return stock.info
