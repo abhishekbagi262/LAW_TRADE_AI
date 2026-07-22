@@ -37,3 +37,7 @@ class MarketData:
     def get_company_info(self, symbol):
         stock = yf.Ticker(symbol)
         return stock.info
+    
+    def get_financials(self, symbol):
+        stock = yf.Ticker(symbol)
+        return stock.financials

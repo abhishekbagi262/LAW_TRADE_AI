@@ -7,6 +7,7 @@ symbol = input("Enter Stock Symbol: ").upper()
 price = market.get_current_price(symbol)
 change = market.get_day_change(symbol)
 info = market.get_company_info(symbol)
+financials = market.get_financials(symbol)
 
 print("\n========== LAW TRADE AI ==========\n")
 
@@ -17,5 +18,8 @@ if price:
     print(f"Day Chg : {change}%")
     print(f"Sector  : {info.get('sector', 'N/A')}")
     print(f"Industry: {info.get('industry', 'N/A')}")
+
+    print("\nFinancial Data:")
+    print(financials.head())
 else:
     print("Invalid stock symbol.")
