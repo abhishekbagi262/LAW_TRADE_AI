@@ -49,3 +49,8 @@ class MarketData:
     def get_cashflow(self, symbol):
         stock = yf.Ticker(symbol)
         return stock.cashflow
+    def get_pe_ratio(self, symbol):
+        stock = yf.Ticker(symbol)
+        info = stock.info
+
+        return info.get("trailingPE")

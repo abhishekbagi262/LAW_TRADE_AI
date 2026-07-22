@@ -10,6 +10,7 @@ info = market.get_company_info(symbol)
 financials = market.get_financials(symbol)
 balance_sheet = market.get_balance_sheet(symbol)
 cashflow = market.get_cashflow(symbol)
+pe_ratio = market.get_pe_ratio(symbol)
 
 print("\n========== LAW TRADE AI ==========\n")
 
@@ -20,6 +21,8 @@ if price:
     print(f"Day Chg : {change}%")
     print(f"Sector  : {info.get('sector', 'N/A')}")
     print(f"Industry: {info.get('industry', 'N/A')}")
+    print(f"P/E Ratio: {pe_ratio}")
+
 
     print("\nFinancial Data:")
     print(financials.head())
