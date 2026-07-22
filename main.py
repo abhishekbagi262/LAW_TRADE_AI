@@ -9,6 +9,7 @@ change = market.get_day_change(symbol)
 info = market.get_company_info(symbol)
 financials = market.get_financials(symbol)
 balance_sheet = market.get_balance_sheet(symbol)
+cashflow = market.get_cashflow(symbol)
 
 print("\n========== LAW TRADE AI ==========\n")
 
@@ -24,5 +25,7 @@ if price:
     print(financials.head())
     print("\nBalance Sheet:")
     print(balance_sheet.head())
+    print("\nCash Flow:")
+    print(cashflow.head())
 else:
     print("Invalid stock symbol.")

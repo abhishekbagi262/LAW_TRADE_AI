@@ -45,3 +45,7 @@ class MarketData:
     def get_balance_sheet(self, symbol):
         stock = yf.Ticker(symbol)
         return stock.balance_sheet
+
+    def get_cashflow(self, symbol):
+        stock = yf.Ticker(symbol)
+        return stock.cashflow
