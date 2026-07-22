@@ -37,7 +37,7 @@ class MarketData:
     def get_company_info(self, symbol):
         stock = yf.Ticker(symbol)
         return stock.info
-    
+
     def get_financials(self, symbol):
         stock = yf.Ticker(symbol)
         return stock.financials
@@ -49,13 +49,26 @@ class MarketData:
     def get_cashflow(self, symbol):
         stock = yf.Ticker(symbol)
         return stock.cashflow
+
     def get_pe_ratio(self, symbol):
         stock = yf.Ticker(symbol)
-        info = stock.info
+        return stock.info.get("trailingPE")
 
-        return info.get("trailingPE")    
     def get_eps(self, symbol):
+        stock = yf.Ticker(symbol)
+        return stock.info.get("trailingEps")
+
+    def get_analysis_data(self, symbol):
         stock = yf.Ticker(symbol)
         info = stock.info
 
-        return info.get("trailingEps")
+        return {
+            "profit_margin": info.get("profitMargins"),
+            "roe": info.get("returnOnEquity"),
+            "debt_to_equity": info.get("debtToEquity"),
+            "revenue_growth": info.get("revenueGrowth"),
+            "earnings_growth": info.get("earningsGrowth"),
+            "free_cash_flow": info.get("freeCashflow"),
+            "dividend_yield": info.get("dividendYield"),
+            "market_cap": info.get("marketCap"),
+        }
