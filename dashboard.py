@@ -132,7 +132,10 @@ if st.button("Analyze Stock"):
             f"### Score: {decision['score']}"
         )
 
-
+        st.subheader("🧠 AI Analysis")
+        st.info(
+            decision["explanation"]
+            )
         st.subheader("AI Reasoning")
 
         for reason in decision["reasons"]:

@@ -104,8 +104,32 @@ class DecisionEngine:
         else:
             signal = "HOLD"
 
+                # =========================
+        # AI EXPLANATION
+        # =========================
+
+        if signal == "BUY":
+            explanation = (
+                "The stock is showing more positive signals than negative signals. "
+                "Fundamental and technical indicators are supporting a bullish outlook."
+            )
+
+        elif signal == "AVOID":
+            explanation = (
+                "The stock is showing more negative signals than positive signals. "
+                "Weak fundamentals or bearish technical indicators are creating risk."
+            )
+
+        else:
+            explanation = (
+                "The stock is showing mixed signals. "
+                "Positive and negative factors are currently balanced, "
+                "so the system recommends HOLD."
+            )
+
         return {
             "score": score,
             "signal": signal,
-            "reasons": reasons
+            "reasons": reasons,
+            "explanation": explanation
         }
