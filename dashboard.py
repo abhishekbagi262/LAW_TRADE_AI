@@ -21,6 +21,7 @@ decision_engine = DecisionEngine()
 
 # Initialize paper trader
 if "paper_trader" not in st.session_state:
+
     st.session_state.paper_trader = PaperTrading(
         starting_balance=100000
     )
@@ -28,12 +29,15 @@ if "paper_trader" not in st.session_state:
 
 # Initialize analysis state
 if "analysis" not in st.session_state:
+
     st.session_state.analysis = None
 
 
 # Title
 st.title("📈 LAW TRADE AI")
-st.subheader("AI-Powered Stock Analysis System")
+st.subheader(
+    "AI-Powered Stock Analysis System"
+)
 
 
 # Stock symbol input
@@ -43,82 +47,135 @@ symbol = st.text_input(
 ).upper()
 
 
-# Analyze button
+# Analyze stock
 if st.button("Analyze Stock"):
 
     with st.spinner("Analyzing stock..."):
 
-        price = market.get_current_price(symbol)
-        change = market.get_day_change(symbol)
-        info = market.get_company_info(symbol)
-        analysis = market.get_analysis_data(symbol)
-        technical_data = technical.get_technical_analysis(symbol)
+        price = market.get_current_price(
+            symbol
+        )
+
+        change = market.get_day_change(
+            symbol
+        )
+
+        info = market.get_company_info(
+            symbol
+        )
+
+        analysis = market.get_analysis_data(
+            symbol
+        )
+
+        technical_data = (
+            technical.get_technical_analysis(
+                symbol
+            )
+        )
 
 
     if price is not None:
 
         fundamental_data = {
-            "pe_ratio": info.get("trailingPE"),
-            "profit_margin": analysis.get("profit_margin"),
-            "revenue_growth": analysis.get("revenue_growth"),
-            "earnings_growth": analysis.get("earnings_growth")
+
+            "pe_ratio": info.get(
+                "trailingPE"
+            ),
+
+            "profit_margin": analysis.get(
+                "profit_margin"
+            ),
+
+            "revenue_growth": analysis.get(
+                "revenue_growth"
+            ),
+
+            "earnings_growth": analysis.get(
+                "earnings_growth"
+            )
+
         }
 
 
-        decision = decision_engine.generate_signal(
-            fundamental_data,
-            technical_data
+        decision = (
+            decision_engine.generate_signal(
+                fundamental_data,
+                technical_data
+            )
         )
 
 
         st.session_state.analysis = {
 
             "symbol": symbol,
+
             "price": price,
+
             "change": change,
+
             "info": info,
+
             "analysis": analysis,
+
             "technical_data": technical_data,
+
             "decision": decision
 
         }
 
 
-        st.success("Stock analyzed successfully!")
+        st.success(
+            "Stock analyzed successfully!"
+        )
 
 
     else:
 
         st.error(
-            "Invalid stock symbol or data unavailable."
+            "Invalid stock symbol or "
+            "data unavailable."
         )
 
 
-# Display analysis only after successful analysis
+# Display analysis
 if st.session_state.analysis is not None:
 
     data = st.session_state.analysis
 
 
     analyzed_symbol = data["symbol"]
+
     price = data["price"]
+
     change = data["change"]
+
     info = data["info"]
+
     analysis = data["analysis"]
-    technical_data = data["technical_data"]
+
+    technical_data = data[
+        "technical_data"
+    ]
+
     decision = data["decision"]
 
 
     st.success(
-        f"{info.get('longName', 'N/A')} analyzed successfully"
+        f"{info.get('longName', 'N/A')} "
+        "analyzed successfully"
     )
 
 
     # Stock Overview
-    st.header("📌 Stock Overview")
+    st.header(
+        "📌 Stock Overview"
+    )
 
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4 = (
+        st.columns(4)
+    )
 
 
     col1.metric(
@@ -135,7 +192,10 @@ if st.session_state.analysis is not None:
 
     col3.metric(
         "P/E Ratio",
-        info.get("trailingPE", "N/A")
+        info.get(
+            "trailingPE",
+            "N/A"
+        )
     )
 
 
@@ -146,35 +206,51 @@ if st.session_state.analysis is not None:
 
 
     # Price Chart
-    st.header("📈 Price Chart")
+    st.header(
+        "📈 Price Chart"
+    )
 
 
-    chart_data = market.get_stock_data(
-        analyzed_symbol,
-        period="6mo"
+    chart_data = (
+        market.get_stock_data(
+            analyzed_symbol,
+            period="6mo"
+        )
     )
 
 
     if not chart_data.empty:
 
-        chart_data = chart_data[["Close"]].copy()
+        chart_data = (
+            chart_data[
+                ["Close"]
+            ].copy()
+        )
 
 
         if chart_data.index.tz is not None:
 
             chart_data.index = (
-                chart_data.index.tz_localize(None)
+                chart_data.index.tz_localize(
+                    None
+                )
             )
 
 
-        st.line_chart(chart_data)
+        st.line_chart(
+            chart_data
+        )
 
 
     # Fundamental Analysis
-    st.header("📊 Fundamental Analysis")
+    st.header(
+        "📊 Fundamental Analysis"
+    )
 
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = (
+        st.columns(3)
+    )
 
 
     col1.metric(
@@ -205,12 +281,16 @@ if st.session_state.analysis is not None:
 
 
     # Technical Analysis
-    st.header("📈 Technical Analysis")
+    st.header(
+        "📈 Technical Analysis"
+    )
 
 
     if technical_data:
 
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3, col4 = (
+            st.columns(4)
+        )
 
 
         col1.metric(
@@ -238,7 +318,9 @@ if st.session_state.analysis is not None:
 
 
     # AI Decision
-    st.header("🤖 LAW TRADE AI Decision")
+    st.header(
+        "🤖 LAW TRADE AI Decision"
+    )
 
 
     st.metric(
@@ -248,11 +330,14 @@ if st.session_state.analysis is not None:
 
 
     st.write(
-        f"### Score: {decision['score']}"
+        f"### Score: "
+        f"{decision['score']}"
     )
 
 
-    st.subheader("AI Reasoning")
+    st.subheader(
+        "AI Reasoning"
+    )
 
 
     for reason in decision["reasons"]:
@@ -263,7 +348,9 @@ if st.session_state.analysis is not None:
 
 
     # Paper Trading
-    st.header("💰 Paper Trading")
+    st.header(
+        "💰 Paper Trading"
+    )
 
 
     paper_trader = (
@@ -285,39 +372,67 @@ if st.session_state.analysis is not None:
     )
 
 
-    col1, col2 = st.columns(2)
+    # IMPORTANT:
+    # Create the two columns BEFORE
+    # using col1 and col2
+
+    col1, col2 = (
+        st.columns(2)
+    )
 
 
+    # BUY
     with col1:
 
-        if st.button("🟢 Paper Buy"):
+        if st.button(
+            "🟢 Paper Buy"
+        ):
 
-            result = paper_trader.buy(
-                analyzed_symbol,
-                price,
-                quantity
+            result = (
+                paper_trader.buy(
+                    analyzed_symbol,
+                    price,
+                    quantity
+                )
             )
 
 
-            st.success(result)
+            st.success(
+                result
+            )
 
 
+            st.rerun()
+
+
+    # SELL
     with col2:
 
-        if st.button("🔴 Paper Sell"):
+        if st.button(
+            "🔴 Paper Sell"
+        ):
 
-            result = paper_trader.sell(
-                analyzed_symbol,
-                price,
-                quantity
+            result = (
+                paper_trader.sell(
+                    analyzed_symbol,
+                    price,
+                    quantity
+                )
             )
 
 
-            st.warning(result)
+            st.warning(
+                result
+            )
+
+
+            st.rerun()
 
 
     # Virtual Portfolio
-    st.header("📦 Virtual Portfolio")
+    st.header(
+        "📦 Virtual Portfolio"
+    )
 
 
     portfolio_data = (
@@ -335,14 +450,24 @@ if st.session_state.analysis is not None:
         )
 
 
-        for symbol_name, details in (
-            portfolio_data["holdings"].items()
+        for (
+            symbol_name,
+            details
+        ) in (
+            portfolio_data[
+                "holdings"
+            ].items()
         ):
 
-            st.subheader(symbol_name)
+
+            st.subheader(
+                symbol_name
+            )
 
 
-            col1, col2, col3 = st.columns(3)
+            col1, col2, col3 = (
+                st.columns(3)
+            )
 
 
             col1.metric(
@@ -364,13 +489,13 @@ if st.session_state.analysis is not None:
 
 
             st.write(
-                f"Average Buy Price: "
+                "Average Buy Price: "
                 f"₹{details['average_price']}"
             )
 
 
             st.write(
-                f"Return: "
+                "Return: "
                 f"{details['return_percent']}%"
             )
 
@@ -383,7 +508,9 @@ if st.session_state.analysis is not None:
 
 
     # Trade History
-    st.header("📜 Trade History")
+    st.header(
+        "📜 Trade History"
+    )
 
 
     history = (
@@ -393,7 +520,9 @@ if st.session_state.analysis is not None:
 
     if history:
 
-        st.json(history)
+        st.json(
+            history
+        )
 
 
     else:
