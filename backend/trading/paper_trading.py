@@ -9,7 +9,6 @@ class PaperTrading:
         starting_balance=100000,
         file_name="paper_trading_data.json"
     ):
-
         self.starting_balance = starting_balance
         self.file_name = file_name
 
@@ -26,51 +25,39 @@ class PaperTrading:
 
             try:
 
-                with open(
-                    self.file_name,
-                    "r"
-                ) as file:
+                with open(self.file_name, "r") as file:
 
                     data = json.load(file)
-
 
                 self.balance = data.get(
                     "balance",
                     self.starting_balance
                 )
 
-
                 self.portfolio = data.get(
                     "portfolio",
                     {}
                 )
-
 
                 self.trade_history = data.get(
                     "trade_history",
                     []
                 )
 
-
-            except:
+            except Exception as error:
 
                 print(
-                    "Could not load paper trading data."
+                    f"Could not load paper trading data: {error}"
                 )
 
 
     def save_data(self):
 
         data = {
-
             "balance": self.balance,
-
             "portfolio": self.portfolio,
-
             "trade_history": self.trade_history
-
         }
-
 
         with open(
             self.file_name,
@@ -91,16 +78,11 @@ class PaperTrading:
         quantity
     ):
 
-        total_cost = (
-            price * quantity
-        )
-
+        total_cost = price * quantity
 
         if total_cost > self.balance:
 
-            return (
-                "Insufficient virtual balance."
-            )
+            return "Insufficient virtual balance."
 
 
         self.balance -= total_cost
@@ -109,38 +91,29 @@ class PaperTrading:
         if symbol in self.portfolio:
 
             old_quantity = (
-                self.portfolio[symbol]
-                ["quantity"]
+                self.portfolio[symbol]["quantity"]
             )
-
 
             old_average_price = (
-                self.portfolio[symbol]
-                ["average_price"]
+                self.portfolio[symbol]["average_price"]
             )
-
 
             new_quantity = (
                 old_quantity + quantity
             )
 
-
             new_average_price = (
 
                 (
-
                     old_average_price
                     * old_quantity
-
                 )
 
                 +
 
                 (
-
                     price
                     * quantity
-
                 )
 
             ) / new_quantity
@@ -156,7 +129,6 @@ class PaperTrading:
                 )
 
             }
-
 
         else:
 
@@ -186,10 +158,8 @@ class PaperTrading:
 
 
         return (
-
             f"Bought {quantity} shares "
             f"of {symbol}"
-
         )
 
 
@@ -202,52 +172,34 @@ class PaperTrading:
 
         if symbol not in self.portfolio:
 
-            return (
-                "You do not own this stock."
-            )
+            return "You do not own this stock."
 
 
         owned_quantity = (
-
-            self.portfolio[symbol]
-            ["quantity"]
-
+            self.portfolio[symbol]["quantity"]
         )
 
 
         if owned_quantity < quantity:
 
-            return (
-                "Not enough shares to sell."
-            )
+            return "Not enough shares to sell."
 
 
         average_price = (
-
-            self.portfolio[symbol]
-            ["average_price"]
-
+            self.portfolio[symbol]["average_price"]
         )
 
 
         profit_loss = (
-
             price - average_price
-
         ) * quantity
 
 
-        self.balance += (
-
-            price * quantity
-
-        )
+        self.balance += price * quantity
 
 
         remaining_quantity = (
-
             owned_quantity - quantity
-
         )
 
 
@@ -257,9 +209,9 @@ class PaperTrading:
 
         else:
 
-            self.portfolio[symbol][
-                "quantity"
-            ] = remaining_quantity
+            self.portfolio[symbol]["quantity"] = (
+                remaining_quantity
+            )
 
 
         self.trade_history.append({
@@ -291,6 +243,100 @@ class PaperTrading:
             f"P/L: ₹{profit_loss:.2f}"
 
         )
+
+
+    def get_portfolio_value(self, market):
+
+        portfolio_value = 0
+
+        portfolio_details = {}
+
+
+        for symbol, data in self.portfolio.items():
+
+            current_price = (
+                market.get_current_price(symbol)
+            )
+
+
+            if current_price is None:
+
+                continue
+
+
+            quantity = data["quantity"]
+
+            average_price = data["average_price"]
+
+
+            current_value = (
+                current_price * quantity
+            )
+
+
+            invested_value = (
+                average_price * quantity
+            )
+
+
+            profit_loss = (
+                current_value - invested_value
+            )
+
+
+            if invested_value != 0:
+
+                return_percent = (
+
+                    profit_loss
+                    / invested_value
+
+                ) * 100
+
+            else:
+
+                return_percent = 0
+
+
+            portfolio_value += current_value
+
+
+            portfolio_details[symbol] = {
+
+                "quantity": quantity,
+
+                "average_price": average_price,
+
+                "current_price": current_price,
+
+                "current_value": round(
+                    current_value,
+                    2
+                ),
+
+                "profit_loss": round(
+                    profit_loss,
+                    2
+                ),
+
+                "return_percent": round(
+                    return_percent,
+                    2
+                )
+
+            }
+
+
+        return {
+
+            "total_value": round(
+                portfolio_value,
+                2
+            ),
+
+            "holdings": portfolio_details
+
+        }
 
 
     def get_portfolio(self):

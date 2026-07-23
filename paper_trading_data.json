@@ -1,9 +1,9 @@
 {
-    "balance": 98711.4,
+    "balance": 97439.2,
     "portfolio": {
         "RELIANCE.NS": {
-            "quantity": 1,
-            "average_price": 1288.6
+            "quantity": 2,
+            "average_price": 1274.25
         }
     },
     "trade_history": [
@@ -25,6 +25,25 @@
             "symbol": "RELIANCE.NS",
             "price": 1288.6,
             "quantity": 1
+        },
+        {
+            "type": "BUY",
+            "symbol": "RELIANCE.NS",
+            "price": 1272.2,
+            "quantity": 1
+        },
+        {
+            "type": "BUY",
+            "symbol": "RELIANCE.NS",
+            "price": 1272.2,
+            "quantity": 6
+        },
+        {
+            "type": "SELL",
+            "symbol": "RELIANCE.NS",
+            "price": 1272.2,
+            "quantity": 6,
+            "profit_loss": -12.3
         }
     ]
 }
