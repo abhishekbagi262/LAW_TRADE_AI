@@ -26,7 +26,7 @@ symbols = [
 starting_balance = 100000
 
 
-train_ratio = 0.50
+train_ratio = 0.60
 
 
 # =========================================================
@@ -744,17 +744,10 @@ print(
 
     f"\nMaximum Drawdown: "
 
-    f"${round(maximum_drawdown, 2)}"
+    f"₹{round(maximum_drawdown, 2)}"
 
 )
 
-print(
-
-    f"Maximum Drawdown %: "
-
-    f"{(maximum_drawdown / starting_balance) * 100:.2f}%"
-
-)
 
 print(
 
@@ -992,7 +985,6 @@ print(
 
 
 print("========================================")
-
 
 
 
