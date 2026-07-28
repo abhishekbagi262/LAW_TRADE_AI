@@ -1,11 +1,14 @@
 import yfinance as yf
 import ta
-
+from backend.market.indicators import Indicators
+from backend import config
+from backend.logger import logger
 
 class TechnicalAnalysis:
 
     def get_technical_analysis(self, symbol, period="1y"):
 
+        logger.info(f"Starting technical analysis for {symbol}")
         stock = yf.Ticker(symbol)
         data = stock.history(period=period)
 
@@ -15,9 +18,8 @@ class TechnicalAnalysis:
         data = data.dropna(subset=["Close"])
 
         # Moving Averages
-        data["SMA_20"] = data["Close"].rolling(window=20).mean()
-        data["SMA_50"] = data["Close"].rolling(window=50).mean()
-
+        data["SMA_20"] = Indicators.sma(data["Close"], config.SMA_FAST)
+        data["SMA_50"] = Indicators.sma(data["Close"], config.SMA_SLOW)
         # Remove rows where indicators are not ready
         data = data.dropna(
             subset=["SMA_20", "SMA_50"]
