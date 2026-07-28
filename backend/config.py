@@ -30,3 +30,17 @@ MAX_PORTFOLIO_RISK = 0.10      # 10%
 # ==========================
 
 MIN_AI_SCORE = 8
+
+# ==========================
+# AI Decision Thresholds
+# ==========================
+
+BUY_SCORE = 5
+HOLD_SCORE = -2
+AVOID_SCORE = -3
+
+# ==========================
+# Confidence Score
+# ==========================
+
+MAX_AI_SCORE = 13

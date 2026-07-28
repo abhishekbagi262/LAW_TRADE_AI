@@ -15,3 +15,17 @@ LOGS_DIR.mkdir(exist_ok=True)
 
 APP_NAME = "LAW TRADE AI"
 VERSION = "1.0.0"
+
+# ==========================
+# AI Decision Thresholds
+# ==========================
+
+BUY_SCORE = 5
+HOLD_SCORE = -2
+AVOID_SCORE = -3
+
+# ==========================
+# Confidence Score
+# ==========================
+
+MAX_AI_SCORE = 13

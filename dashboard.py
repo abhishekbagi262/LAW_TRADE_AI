@@ -491,11 +491,12 @@ if (
 
 
     st.write(
-
-        f"### Score: "
-        f"{decision['score']}"
-
+        f"### Score: {decision['score']}"
     )
+
+    st.write(
+        f"### Confidence: {decision['confidence']}%"
+        )
 
 
     st.subheader(

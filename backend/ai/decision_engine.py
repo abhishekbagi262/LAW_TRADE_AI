@@ -1,4 +1,6 @@
+from backend import config
 class DecisionEngine:
+
 
     def generate_signal(self, fundamental, technical):
 
@@ -95,10 +97,10 @@ class DecisionEngine:
         # FINAL DECISION
         # =========================
 
-        if score >= 5:
+        if score >= config.BUY_SCORE:
             signal = "BUY"
 
-        elif score <= -3:
+        elif score <= config.AVOID_SCORE:
             signal = "AVOID"
 
         else:
@@ -127,9 +129,14 @@ class DecisionEngine:
                 "so the system recommends HOLD."
             )
 
+        confidence = round((abs(score) / config.MAX_AI_SCORE) * 100, 1)
+        if confidence > 100:
+            confidence = 100
+
         return {
-            "score": score,
-            "signal": signal,
-            "reasons": reasons,
-            "explanation": explanation
-        }
+    "score": score,
+    "confidence": confidence,
+    "signal": signal,
+    "reasons": reasons,
+    "explanation": explanation
+}
