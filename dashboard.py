@@ -7,6 +7,8 @@ from backend.ai.decision_engine import DecisionEngine
 from backend.trading.paper_trading import PaperTrading
 from backend.risk.risk_manager import RiskManager
 from backend import config
+from backend.market_scanner import MarketScanner
+from backend.stock_analyzer import StockAnalyzer
 
 
 # =========================
@@ -20,6 +22,8 @@ st.set_page_config(
 )
 
 
+
+
 # =========================
 # INITIALIZE BACKEND
 # =========================
@@ -31,6 +35,16 @@ technical = TechnicalAnalysis()
 decision_engine = DecisionEngine()
 
 risk_manager = RiskManager()
+
+
+stock_analyzer = StockAnalyzer(
+    market,
+    technical,
+    decision_engine,
+    risk_manager,
+    config
+)
+market_scanner = MarketScanner(stock_analyzer)
 
 
 # =========================
@@ -108,132 +122,33 @@ if st.button(
         "Analyzing stock..."
     ):
 
-        price = (
-            market.get_current_price(
-                symbol
-            )
+        stock_data = stock_analyzer.analyze_stock(symbol)
+
+    if stock_data is None:
+
+        st.error(
+            "Invalid stock symbol or data unavailable."
         )
 
-        change = (
-            market.get_day_change(
-                symbol
-            )
-        )
+    else:
 
-        info = (
-            market.get_company_info(
-                symbol
-            )
-        )
-
-        analysis = (
-            market.get_analysis_data(
-                symbol
-            )
-        )
-
-        technical_data = (
-            technical.get_technical_analysis(
-                symbol
-            )
-        )
-
-
-    if price is not None:
-
-        fundamental_data = {
-
-            "pe_ratio": info.get(
-                "trailingPE"
-            ),
-
-            "profit_margin": analysis.get(
-                "profit_margin"
-            ),
-
-            "revenue_growth": analysis.get(
-                "revenue_growth"
-            ),
-
-            "earnings_growth": analysis.get(
-                "earnings_growth"
-            )
-
-        }
-
-
-        decision = (
-            decision_engine.generate_signal(
-                fundamental_data,
-                technical_data
-            )
-        )
-        entry_price = price
-
-        stop_loss = risk_manager.calculate_stop_loss(
-            entry_price,
-            technical_data["atr"]
-        )
-        targets = risk_manager.calculate_targets(
-            entry_price,
-            stop_loss
-        )
-        trade_quality = decision_engine.calculate_trade_quality(
-            analysis,
-            technical_data,
-            targets
-        )
-        st.write("Trade Quality Score:", trade_quality)
-
-        position_size = risk_manager.calculate_position_size(
-            config.INITIAL_BALANCE,
-            entry_price,
-            stop_loss
-        )
-        
-
-
-        st.session_state.analysis = {
-
-            "symbol": symbol,
-
-            "price": price,
-
-            "change": change,
-
-            "info": info,
-
-            "analysis": analysis,
-
-            "technical_data": technical_data,
-
-            "decision": decision,
-
-            "entry_price": entry_price,
-
-            "stop_loss": stop_loss,
-
-            "targets": targets,
-
-            "trade_quality": trade_quality,
-
-            "position_size": position_size
-
-        }
-
+        st.session_state.analysis = stock_data
 
         st.success(
             "Stock analyzed successfully!"
         )
 
-
-    else:
-
-        st.error(
-            "Invalid stock symbol or "
-            "data unavailable."
+        st.header(
+            "📈 AI Market Scanner"
         )
 
+        scanner_data = (
+            market_scanner.scan_market()
+        )
+
+        st.table(
+            scanner_data
+        )
 
 # =========================
 # DISPLAY ANALYSIS
