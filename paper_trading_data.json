@@ -85,6 +85,19 @@
             "price": 1272.2,
             "quantity": 2,
             "profit_loss": 0.0
+        },
+        {
+            "type": "BUY",
+            "symbol": "RELIANCE.NS",
+            "price": 1275.9,
+            "quantity": 1
+        },
+        {
+            "type": "SELL",
+            "symbol": "RELIANCE.NS",
+            "price": 1275.9,
+            "quantity": 1,
+            "profit_loss": 0.0
         }
     ]
 }
