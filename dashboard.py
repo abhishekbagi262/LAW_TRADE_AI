@@ -764,6 +764,52 @@ if (
                 f"{details['return_percent']}%"
 
             )
+            # =========================
+            # AI Portfolio Advice
+            # =========================
+
+            try:
+                info = market.get_company_info(symbol_name)
+                analysis = market.get_analysis_data(symbol_name)
+
+                technical_data = technical.get_technical_analysis(symbol_name)
+
+                fundamental_data = {
+                    "pe_ratio": info.get("trailingPE"),
+
+                    "profit_margin": analysis.get("profit_margin"),
+
+                    "revenue_growth": analysis.get("revenue_growth"),
+
+                    "earnings_growth": analysis.get("earnings_growth")
+
+                }
+                portfolio_decision = decision_engine.generate_signal(
+                    fundamental_data,
+                    technical_data
+                )
+                signal = portfolio_decision["signal"]
+                confidence = portfolio_decision["confidence"]
+                if signal == "BUY":
+
+                    st.success(
+                        f"🟢 BUY ({confidence}%)"
+                    )
+
+                elif signal == "HOLD":
+                    st.warning(
+                        f"🟡 HOLD ({confidence}%)"
+                    )
+
+                else:
+                    st.error(
+                        f"🔴 AVOID ({confidence}%)"
+                )
+                
+            except Exception:
+                st.warning(
+                    "AI recommendation unavailable."
+                )
 
 
     else:
