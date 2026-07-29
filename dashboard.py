@@ -31,6 +31,7 @@ technical = TechnicalAnalysis()
 decision_engine = DecisionEngine()
 
 risk_manager = RiskManager()
+print(risk_manager.__class__.__module__)
 
 
 # =========================
@@ -170,7 +171,10 @@ if st.button(
         )
         entry_price = price
 
-        stop_loss = risk_manager.calculate_stop_loss(entry_price)
+        stop_loss = risk_manager.calculate_stop_loss(
+            entry_price,
+            technical_data["atr"]
+        )
 
         position_size = risk_manager.calculate_position_size(
             config.INITIAL_BALANCE,

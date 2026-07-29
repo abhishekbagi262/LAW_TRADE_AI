@@ -40,6 +40,16 @@ class TechnicalAnalysis:
         data["MACD"] = macd.macd()
         data["MACD_Signal"] = macd.macd_signal()
 
+        # ATR
+        atr = ta.volatility.AverageTrueRange(
+            high=data["High"],
+            low=data["Low"],
+            close=data["Close"],
+            window=14
+        )
+
+        data["ATR"] = atr.average_true_range()
+
         data = data.dropna(
             subset=["RSI", "MACD", "MACD_Signal"]
         )
@@ -52,6 +62,7 @@ class TechnicalAnalysis:
         rsi = latest["RSI"]
         macd_value = latest["MACD"]
         macd_signal = latest["MACD_Signal"]
+        atr_value = latest["ATR"]
 
         if current_price > sma_20 and sma_20 > sma_50:
             trend = "UPTREND"
@@ -92,6 +103,7 @@ class TechnicalAnalysis:
             "macd": round(float(macd_value), 2),
             "macd_signal": round(float(macd_signal), 2),
             "macd_trend": macd_trend,
+            "atr": round(float(atr_value), 2),
             "trend": trend,
             "trend_strength": round(float(trend_strength), 2),
             "average_volume": round(float(average_volume), 2),

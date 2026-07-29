@@ -3,11 +3,11 @@ from backend import config
 
 class RiskManager:
 
-    def calculate_stop_loss(self, entry_price):
+    def calculate_stop_loss(self, entry_price, atr):
 
-         stop_loss = entry_price * (1 - config.STOP_LOSS_PERCENTAGE)
+        stop_loss = entry_price - (2 * atr)
 
-         return round(stop_loss, 2)
+        return round(stop_loss, 2)
 
     def calculate_position_size(self, balance, entry_price, stop_loss):
 
