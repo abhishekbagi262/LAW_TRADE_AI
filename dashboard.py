@@ -809,7 +809,122 @@ if (
 
         )
 
+# =========================
+# AI STOCK RECOMMENDATION
+# =========================
 
+st.header("🤖 AI Stock Recommendation")
+
+recommendation_symbols = st.text_input(
+    "Stocks to Analyze",
+    "RELIANCE.NS, TCS.NS, HDFCBANK.NS, INFY.NS, ITC.NS",
+    key="recommendation_symbols"
+)
+
+if st.button("🚀 Find Best Stock"):
+
+    recommendation_results = []
+
+    stocks = [
+        stock.strip().upper()
+        for stock in recommendation_symbols.split(",")
+        if stock.strip()
+    ]
+
+    with st.spinner("Analyzing stocks..."):
+
+        for stock in stocks:
+
+            try:
+
+                price = market.get_current_price(stock)
+
+                if price is None:
+                    continue
+
+                info = market.get_company_info(stock)
+                analysis = market.get_analysis_data(stock)
+                technical_data = technical.get_technical_analysis(stock)
+
+                fundamental_data = {
+                    "pe_ratio": info.get("trailingPE"),
+                    "profit_margin": analysis.get("profit_margin"),
+                    "revenue_growth": analysis.get("revenue_growth"),
+                    "earnings_growth": analysis.get("earnings_growth")
+                }
+
+                decision = decision_engine.generate_signal(
+                    fundamental_data,
+                    technical_data
+                )
+
+                stop_loss = risk_manager.calculate_stop_loss(
+                    price,
+                    technical_data["atr"]
+                )
+
+                quantity = risk_manager.calculate_position_size(
+                    config.INITIAL_BALANCE,
+                    price,
+                    stop_loss
+                )
+
+                recommendation_results.append({
+                    "Stock": stock,
+                    "Signal": decision["signal"],
+                    "Score": decision["score"],
+                    "Confidence": f"{decision['confidence']}%",
+                    "Price": price,
+                    "Suggested Qty": quantity
+                })
+
+            except Exception:
+                continue
+
+    if recommendation_results:
+        recommendation_results.sort(
+            key=lambda item: item["Score"],
+            reverse=True
+        )
+        for index, stock in enumerate(recommendation_results, start=1):
+            stock["Rank"] = index
+
+        recommendation_df = pd.DataFrame(
+            recommendation_results
+        )
+        recommendation_df = recommendation_df[
+            [
+                "Rank",
+                "Stock",
+                "Signal",
+                "Score",
+                "Confidence",
+                "Price",
+                "Suggested Qty"
+            ]
+        ]
+
+        st.subheader("🏆 AI Recommendations")
+        st.dataframe(
+            recommendation_df,
+            use_container_width=True
+        )
+
+        best_stock = recommendation_results[0]
+
+        st.success(
+            f"🏆 Best AI Pick: {best_stock['Stock']} | "
+            f"Signal: {best_stock['Signal']} | "
+            f"Score: {best_stock['Score']} | "
+            f"Confidence: {best_stock['Confidence']} | "
+            f"Suggested Qty: {best_stock['Suggested Qty']}"
+        )
+
+    else:
+        st.warning(
+            "No valid stocks could be analyzed."
+        )
+    
 # ============================================================
 # STOCK COMPARISON SECTION
 # ============================================================
