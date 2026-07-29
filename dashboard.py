@@ -5,6 +5,8 @@ from backend.market.market_data import MarketData
 from backend.market.technical_analysis import TechnicalAnalysis
 from backend.ai.decision_engine import DecisionEngine
 from backend.trading.paper_trading import PaperTrading
+from backend.risk.risk_manager import RiskManager
+from backend import config
 
 
 # =========================
@@ -27,6 +29,8 @@ market = MarketData()
 technical = TechnicalAnalysis()
 
 decision_engine = DecisionEngine()
+
+risk_manager = RiskManager()
 
 
 # =========================
@@ -164,6 +168,15 @@ if st.button(
                 technical_data
             )
         )
+        entry_price = price
+
+        stop_loss = risk_manager.calculate_stop_loss(entry_price)
+
+        position_size = risk_manager.calculate_position_size(
+            config.INITIAL_BALANCE,
+            entry_price,
+            stop_loss
+        )
 
 
         st.session_state.analysis = {
@@ -180,7 +193,13 @@ if st.button(
 
             "technical_data": technical_data,
 
-            "decision": decision
+            "decision": decision,
+
+            "entry_price": entry_price,
+
+            "stop_loss": stop_loss,
+
+            "position_size": position_size
 
         }
 
@@ -511,6 +530,29 @@ if (
         st.write(
             f"• {reason}"
         )
+
+    # =========================
+    # RISK MANAGEMENT
+    # =========================
+
+    st.header("🛡️ Risk Management")
+
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric(
+        "Entry Price",
+        f"₹{data['entry_price']}"
+    )
+
+    col2.metric(
+        "Stop Loss",
+        f"₹{data['stop_loss']}"
+    )
+
+    col3.metric(
+        "Recommended Quantity",
+        data["position_size"]
+    )
 
 
     # =========================

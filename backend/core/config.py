@@ -20,7 +20,7 @@ VERSION = "1.0.0"
 # AI Decision Thresholds
 # ==========================
 
-BUY_SCORE = 5
+BUY_SCORE = 6
 HOLD_SCORE = -2
 AVOID_SCORE = -3
 
@@ -28,4 +28,4 @@ AVOID_SCORE = -3
 # Confidence Score
 # ==========================
 
-MAX_AI_SCORE = 13
+MAX_AI_SCORE = 14

@@ -62,6 +62,8 @@ class TechnicalAnalysis:
         else:
             trend = "SIDEWAYS"
 
+        trend_strength = abs(sma_20 - sma_50)
+
         if rsi < 30:
             rsi_signal = "OVERSOLD"
 
@@ -77,6 +79,10 @@ class TechnicalAnalysis:
         else:
             macd_trend = "BEARISH"
 
+        average_volume = data["Volume"].rolling(20).mean().iloc[-1]
+
+        current_volume = data["Volume"].iloc[-1]
+        
         return {
             "current_price": round(float(current_price), 2),
             "sma_20": round(float(sma_20), 2),
@@ -86,5 +92,8 @@ class TechnicalAnalysis:
             "macd": round(float(macd_value), 2),
             "macd_signal": round(float(macd_signal), 2),
             "macd_trend": macd_trend,
-            "trend": trend
+            "trend": trend,
+            "trend_strength": round(float(trend_strength), 2),
+            "average_volume": round(float(average_volume), 2),
+            "current_volume": int(current_volume),
         }

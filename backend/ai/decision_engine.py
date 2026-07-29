@@ -66,23 +66,39 @@ class DecisionEngine:
         trend = technical.get("trend")
 
         if trend == "UPTREND":
-            score += 2
+            score += 3
             reasons.append("Technical trend is bullish")
 
         elif trend == "DOWNTREND":
-            score -= 2
+            score -= 3
             reasons.append("Technical trend is bearish")
+        
 
-        rsi_signal = technical.get("rsi_signal")
 
-        if rsi_signal == "OVERSOLD":
-            score += 1
-            reasons.append("Stock may be technically oversold")
+        
+        rsi = technical.get("rsi")
 
-        elif rsi_signal == "OVERBOUGHT":
-            score -= 1
-            reasons.append("Stock may be technically overbought")
+        if rsi is not None:
+            if rsi < 25:
+                score += 2
+                reasons.append(f"RSI ({rsi}) indicates a strong oversold opportunity")
 
+            elif rsi < 35:
+                score += 1
+                reasons.append(f"RSI ({rsi}) indicates a mild oversold condition")
+
+            elif 35 <= rsi <= 65:
+                score += 1
+                reasons.append(f"RSI ({rsi}) is in a healthy trading range")
+
+            elif rsi <= 75:
+                score -= 1
+                reasons.append(f"RSI ({rsi}) suggests the stock is becoming overbought")
+
+            else:
+
+                score -= 2
+                reasons.append(f"RSI ({rsi}) indicates a strongly overbought condition")
         macd_trend = technical.get("macd_trend")
 
         if macd_trend == "BULLISH":
@@ -92,6 +108,24 @@ class DecisionEngine:
         elif macd_trend == "BEARISH":
             score -= 2
             reasons.append("MACD indicates bearish momentum")
+
+        # =========================
+        # VOLUME ANALYSIS
+        # =========================
+
+        current_volume = technical.get("current_volume")
+        average_volume = technical.get("average_volume")
+
+        if current_volume is not None and average_volume is not None:
+
+            if current_volume > average_volume * 1.2:
+                score += 1
+                reasons.append("Trading volume is above average")
+
+            elif current_volume < average_volume * 0.8:
+                score -= 1
+                reasons.append("Trading volume is below average")
+        
 
         # =========================
         # FINAL DECISION
