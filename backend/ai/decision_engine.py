@@ -174,3 +174,43 @@ class DecisionEngine:
     "reasons": reasons,
     "explanation": explanation
 }
+    def calculate_trade_quality(
+            self,
+            analysis,
+            technical_data,
+            targets
+        ):
+            score = 0
+
+            # Trend
+            if technical_data["trend"] == "UPTREND":
+                score += 2
+
+            # RSI
+            if 35 <= technical_data["rsi"] <= 65:
+                score += 1
+
+            # MACD
+            if technical_data["macd"] > technical_data["macd_signal"]:
+                score += 2
+
+            # Volume
+            if technical_data["current_volume"] > technical_data["average_volume"]:
+                score += 1
+            # Revenue Growth
+            if analysis["revenue_growth"] > 10:
+                score += 1
+
+            # Earnings Growth
+            if analysis["earnings_growth"] > 0:
+                score += 1
+
+            # Profit Margin
+            if analysis["profit_margin"] > 10:
+                score += 1
+
+            # Risk / Reward
+            if targets["rr2"] >= 3:
+                score += 1
+
+            return score

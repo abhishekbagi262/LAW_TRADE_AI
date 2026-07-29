@@ -178,12 +178,19 @@ if st.button(
             entry_price,
             stop_loss
         )
+        trade_quality = decision_engine.calculate_trade_quality(
+            analysis,
+            technical_data,
+            targets
+        )
+        st.write("Trade Quality Score:", trade_quality)
 
         position_size = risk_manager.calculate_position_size(
             config.INITIAL_BALANCE,
             entry_price,
             stop_loss
         )
+        
 
 
         st.session_state.analysis = {
@@ -207,6 +214,8 @@ if st.button(
             "stop_loss": stop_loss,
 
             "targets": targets,
+
+            "trade_quality": trade_quality,
 
             "position_size": position_size
 
@@ -539,6 +548,45 @@ if (
         st.write(
             f"• {reason}"
         )
+    st.subheader("🏆 Trade Quality")
+
+    quality = data["trade_quality"]
+
+    if quality >= 9:
+        grade = "A+"
+    elif quality >= 8:
+        grade = "A"
+    elif quality >= 7:
+        grade = "B"
+    elif quality >= 6:
+        grade = "C"
+    else:
+        grade = "D"
+
+    col1, col2 = st.columns(2)
+
+    col1.metric(
+        "Trade Quality",
+        f"{quality}/10"
+    )
+
+    col2.metric(
+        "Grade",
+        grade
+    )
+    if quality >= 9:
+        stars = "★★★★★"
+    elif quality >= 8:
+        stars = "★★★★☆"
+    elif quality >= 7:
+        stars = "★★★☆☆"
+    elif quality >= 6:
+        stars = "★★☆☆☆"
+    else:
+        stars = "★☆☆☆☆"
+
+    st.write(f"### {stars}")
+    
 
     # =========================
     # RISK MANAGEMENT
