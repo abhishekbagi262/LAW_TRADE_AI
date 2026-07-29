@@ -1,5 +1,5 @@
 {
-    "balance": 93846.0,
+    "balance": 21915.949999999997,
     "portfolio": {
         "RELIANCE.NS": {
             "quantity": 2,
@@ -10,8 +10,12 @@
             "average_price": 2446.6
         },
         "INFY.NS": {
-            "quantity": 1,
+            "quantity": 63,
             "average_price": 1155.6
+        },
+        "POWERGRID.NS": {
+            "quantity": 1,
+            "average_price": 282.85
         }
     },
     "trade_history": [
@@ -161,6 +165,24 @@
             "symbol": "RELIANCE.NS",
             "price": 1275.9,
             "quantity": 1
+        },
+        {
+            "type": "BUY",
+            "symbol": "POWERGRID.NS",
+            "price": 282.85,
+            "quantity": 1
+        },
+        {
+            "type": "BUY",
+            "symbol": "INFY.NS",
+            "price": 1155.6,
+            "quantity": 31
+        },
+        {
+            "type": "BUY",
+            "symbol": "INFY.NS",
+            "price": 1155.6,
+            "quantity": 31
         }
     ]
 }

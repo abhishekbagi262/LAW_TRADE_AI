@@ -698,12 +698,11 @@ if (
             )
 
 
-            st.success(
-                result
-            )
-
-
-            st.rerun()
+            if result == "Insufficient virtual balance.":
+                st.error(result)
+            else:
+                st.success(result)
+                st.rerun()
 
 
     # =========================
