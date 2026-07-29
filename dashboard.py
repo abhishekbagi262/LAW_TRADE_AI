@@ -174,6 +174,10 @@ if st.button(
             entry_price,
             technical_data["atr"]
         )
+        targets = risk_manager.calculate_targets(
+            entry_price,
+            stop_loss
+        )
 
         position_size = risk_manager.calculate_position_size(
             config.INITIAL_BALANCE,
@@ -201,6 +205,8 @@ if st.button(
             "entry_price": entry_price,
 
             "stop_loss": stop_loss,
+
+            "targets": targets,
 
             "position_size": position_size
 
@@ -539,23 +545,48 @@ if (
     # =========================
 
     st.header("🛡️ Risk Management")
+    if data["decision"]["signal"] == "BUY":
+        col1, col2, col3, col4, col5, col6 = st.columns(6)
 
-    col1, col2, col3 = st.columns(3)
+        col1.metric(
+            "Entry",
+            f"₹{data['entry_price']}"
+        )
 
-    col1.metric(
-        "Entry Price",
-        f"₹{data['entry_price']}"
-    )
+        col2.metric(
+            "Stop Loss",
+            f"₹{data['stop_loss']}"
+        )
 
-    col2.metric(
-        "Stop Loss",
-        f"₹{data['stop_loss']}"
-    )
+        col3.metric(
+            "Target 1",
+            f"₹{data['targets']['target1']}"
+        )
+        col4.metric(
+            "Target 2",
+            f"₹{data['targets']['target2']}"
+        )
 
-    col3.metric(
-        "Recommended Quantity",
-        data["position_size"]
-    )
+        col5.metric(
+            "Quantity",
+            data["position_size"]
+        )
+
+        col6.metric(
+            "Risk/Reward",
+            f"1 : {data['targets']['rr2']}"
+        )
+    else:
+        st.warning(
+            f"""
+    🚫 No trade setup generated.
+
+    Current AI Signal: {data['decision']['signal']}
+
+    LAW TRADE AI does not recommend opening a new position
+    until the signal changes to BUY.
+    """
+        )
 
 
     # =========================
@@ -907,6 +938,10 @@ if st.button("🚀 Find Best Stock"):
                 stop_loss = risk_manager.calculate_stop_loss(
                     price,
                     technical_data["atr"]
+                )
+                targets = risk_manager.calculate_targets(
+                    entry_price,
+                    stop_loss
                 )
 
                 quantity = risk_manager.calculate_position_size(

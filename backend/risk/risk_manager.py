@@ -21,3 +21,24 @@ class RiskManager:
         quantity = int(risk_amount / risk_per_share)
 
         return max(quantity, 1)
+
+    def calculate_targets(self, entry_price, stop_loss):
+        risk = entry_price - stop_loss
+
+        target1 = entry_price + (2 * risk)
+
+        target2 = entry_price + (4 * risk)
+
+        reward1 = target1 - entry_price
+        reward2 = target2 - entry_price
+
+        rr1 = round(reward1 / risk, 2) if risk != 0 else 0
+        rr2 = round(reward2 / risk, 2) if risk != 0 else 0
+
+        return {
+            "target1": round(target1, 2),
+            "target2": round(target2, 2),
+            "risk": round(risk, 2),
+            "rr1": rr1,
+            "rr2": rr2
+        }
