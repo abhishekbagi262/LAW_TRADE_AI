@@ -869,14 +869,23 @@ if st.button("🚀 Find Best Stock"):
                     stop_loss
                 )
 
-                recommendation_results.append({
-                    "Stock": stock,
-                    "Signal": decision["signal"],
-                    "Score": decision["score"],
-                    "Confidence": f"{decision['confidence']}%",
-                    "Price": price,
-                    "Suggested Qty": quantity
-                })
+                if (
+                    decision["signal"] == "BUY"
+                    and decision["score"] >= 8
+                ):
+                    recommendation_results.append({
+                        "Stock": stock,
+
+                        "Signal": decision["signal"],
+
+                        "Score": decision["score"],
+
+                        "Confidence": f"{decision['confidence']}%",
+
+                        "Price": price,
+
+                        "Suggested Qty": quantity
+                    })
 
             except Exception:
                 continue
@@ -921,8 +930,9 @@ if st.button("🚀 Find Best Stock"):
         )
 
     else:
-        st.warning(
-            "No valid stocks could be analyzed."
+        st.info(
+            "📉 No strong BUY opportunities found today.\n\n"
+            "All analyzed stocks are either HOLD, AVOID, or have a score below 8."
         )
     
 # ============================================================
