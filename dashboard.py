@@ -31,7 +31,6 @@ technical = TechnicalAnalysis()
 decision_engine = DecisionEngine()
 
 risk_manager = RiskManager()
-print(risk_manager.__class__.__module__)
 
 
 # =========================
@@ -794,12 +793,10 @@ if (
 
 
     if history:
-
-
-        st.json(
-
-            history
-
+        history_df = pd.DataFrame(history)
+        st.dataframe(
+            history_df,
+            use_container_width=True
         )
 
 

@@ -1,6 +1,15 @@
 {
-    "balance": 100000.0,
-    "portfolio": {},
+    "balance": 96277.5,
+    "portfolio": {
+        "RELIANCE.NS": {
+            "quantity": 1,
+            "average_price": 1275.9
+        },
+        "TCS.NS": {
+            "quantity": 1,
+            "average_price": 2446.6
+        }
+    },
     "trade_history": [
         {
             "type": "BUY",
@@ -98,6 +107,18 @@
             "price": 1275.9,
             "quantity": 1,
             "profit_loss": 0.0
+        },
+        {
+            "type": "BUY",
+            "symbol": "RELIANCE.NS",
+            "price": 1275.9,
+            "quantity": 1
+        },
+        {
+            "type": "BUY",
+            "symbol": "TCS.NS",
+            "price": 2446.6,
+            "quantity": 1
         }
     ]
 }
