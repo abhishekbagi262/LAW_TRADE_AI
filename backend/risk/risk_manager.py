@@ -5,7 +5,7 @@ class RiskManager:
 
     def calculate_stop_loss(self, entry_price):
 
-         stop_loss = entry_price * 0.98
+         stop_loss = entry_price * (1 - config.STOP_LOSS_PERCENTAGE)
 
          return round(stop_loss, 2)
 

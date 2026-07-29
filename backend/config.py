@@ -23,6 +23,7 @@ INITIAL_BALANCE = 100000
 # ==========================
 
 MAX_RISK_PER_TRADE = 0.02      # 2%
+STOP_LOSS_PERCENTAGE = 0.02
 MAX_PORTFOLIO_RISK = 0.10      # 10%
 
 # ==========================

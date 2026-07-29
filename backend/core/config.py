@@ -13,7 +13,7 @@ DATA_DIR.mkdir(exist_ok=True)
 DATABASE_DIR.mkdir(exist_ok=True)
 LOGS_DIR.mkdir(exist_ok=True)
 
-APP_NAME = "LAW TRADE AI"
+APP_NAME = "LAW TRADER"
 VERSION = "1.0.0"
 
 # ==========================
@@ -29,3 +29,4 @@ AVOID_SCORE = -3
 # ==========================
 
 MAX_AI_SCORE = 14
+
