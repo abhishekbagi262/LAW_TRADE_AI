@@ -1,5 +1,5 @@
 import yfinance as yf
-
+import math
 
 class MarketData:
 
@@ -41,16 +41,13 @@ class MarketData:
 
         try:
 
-            stock = yf.Ticker(
-                symbol
-            )
+            stock = yf.Ticker(symbol)
 
             data = stock.history(
                 period="1d"
             )
 
             if data.empty:
-
                 return None
 
             price = data["Close"].iloc[-1]
@@ -59,11 +56,9 @@ class MarketData:
                 float(price),
                 2
             )
-
         except Exception:
 
             return None
-
 
     # =========================
     # DAY CHANGE
