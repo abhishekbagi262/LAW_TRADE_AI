@@ -5,13 +5,8 @@ class MarketScanner:
         self.stock_analyzer = stock_analyzer
 
     def scan_market(self):
-        stocks = [
-            "RELIANCE.NS",
-            "TCS.NS",
-            "INFY.NS",
-            "HDFCBANK.NS",
-            "ITC.NS"
-        ]
+        from backend.nifty50 import NIFTY_50
+        stocks = NIFTY_50
 
         results = []
 
@@ -32,4 +27,11 @@ class MarketScanner:
 
             })
 
+        results.sort(
+            key=lambda x: (
+                float(x["Confidence"].replace("%", "")),
+                int(x["Quality"].split("/")[0])
+            ),
+            reverse=True
+        )
         return results

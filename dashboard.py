@@ -137,19 +137,75 @@ if st.button(
         st.success(
             "Stock analyzed successfully!"
         )
+        scanner_data = market_scanner.scan_market()
 
-        st.header(
-            "📈 AI Market Scanner"
-        )
+        st.session_state.scanner_data = scanner_data
 
-        scanner_data = (
-            market_scanner.scan_market()
-        )
+# =========================
+# AI MARKET SCANNER
+# =========================
 
-        st.table(
-            scanner_data
-        )
+if "scanner_data" in st.session_state:
 
+    st.header(
+        "📈 AI Market Scanner"
+    )
+
+    signal_filter = st.selectbox(
+        "Signal",
+        ["All", "BUY", "HOLD", "AVOID"]
+    )
+
+    confidence_filter = st.slider(
+        "Minimum Confidence (%)",
+        min_value=0,
+        max_value=100,
+        value=50
+    )
+
+    quality_filter = st.slider(
+        "Minimum Trade Quality",
+        min_value=0,
+        max_value=10,
+        value=5
+    )
+
+    filtered_data = st.session_state.scanner_data
+
+    if signal_filter != "All":
+        filtered_data = [
+
+            stock
+
+            for stock in filtered_data
+
+            if stock["Signal"] == signal_filter
+
+        ]
+
+    filtered_data = [
+
+        stock
+
+        for stock in filtered_data
+
+        if float(
+            stock["Confidence"].replace("%", "")
+        ) >= confidence_filter
+    ]
+    filtered_data = [
+        stock
+
+        for stock in filtered_data
+
+        if int(
+
+            stock["Quality"].split("/")[0]
+        ) >= quality_filter
+    ]
+
+    st.table(filtered_data)
+        
 # =========================
 # DISPLAY ANALYSIS
 # =========================

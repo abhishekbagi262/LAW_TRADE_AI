@@ -198,17 +198,17 @@ class DecisionEngine:
             if technical_data["current_volume"] > technical_data["average_volume"]:
                 score += 1
             # Revenue Growth
-            if analysis["revenue_growth"] > 10:
+            if analysis.get("revenue_growth") is not None and analysis["revenue_growth"] > 10:
                 score += 1
 
+
             # Earnings Growth
-            if analysis["earnings_growth"] > 0:
+            if analysis.get("earnings_growth") is not None and analysis["earnings_growth"] > 0:
                 score += 1
 
             # Profit Margin
-            if analysis["profit_margin"] > 10:
+            if analysis.get("profit_margin") is not None and analysis["profit_margin"] > 10:
                 score += 1
-
             # Risk / Reward
             if targets["rr2"] >= 3:
                 score += 1
