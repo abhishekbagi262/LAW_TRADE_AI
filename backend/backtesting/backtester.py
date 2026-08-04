@@ -929,6 +929,24 @@ class Backtester:
                 elif trade["profit_loss"] < 0:
 
                     losing_trades += 1
+        total_completed_trades = (
+            winning_trades
+            +
+            losing_trades
+        )
+
+        if total_completed_trades > 0:
+            win_rate = round(
+                (
+                    winning_trades
+                    /
+                    total_completed_trades
+                ) * 100,
+                2
+            )
+
+        else:
+            win_rate = 0
 
 
         return {
@@ -992,6 +1010,8 @@ class Backtester:
             "losing_trades":
 
                 losing_trades,
+
+            "win_rate": win_rate,
 
             "total_transaction_costs": round(
 

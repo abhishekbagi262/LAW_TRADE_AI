@@ -128,6 +128,29 @@ class PerformanceMetrics:
 
         )
 
+        # =========================
+        # EXPECTANCY
+        # =========================
+
+        loss_rate = 100 - win_rate
+
+        expectancy = (
+            (
+                win_rate / 100
+
+            )
+
+            * average_win
+        ) - (
+
+            (
+                loss_rate / 100
+
+            )
+
+            * abs(average_loss)
+        )
+
         return {
 
             "total_trades": total_trades,
@@ -163,6 +186,11 @@ class PerformanceMetrics:
 
             "profit_factor": round(
                 profit_factor,
+                2
+            ),
+
+            "expectancy": round(
+                expectancy,
                 2
             ),
 

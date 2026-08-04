@@ -377,8 +377,8 @@ if (
     )
 
 
-    col1, col2, col3 = (
-        st.columns(3)
+    col1, col2, col3, col4 = (
+        st.columns(4)
     )
 
 
@@ -765,10 +765,7 @@ if (
             )
 
 
-            col1, col2, col3 = (
-                st.columns(3)
-            )
-
+            col1, col2, col3, col4 = st.columns(4)
 
             col1.metric(
 
@@ -795,6 +792,8 @@ if (
                 f"₹{details['profit_loss']}"
 
             )
+
+            
 
 
             st.write(
@@ -1700,6 +1699,53 @@ if st.button(
 
                         result["losing_trades"]
 
+                    )
+
+                    col4.metric(
+                        "Win Rate",
+
+                        f"{result['performance']['win_rate']}%"
+                    )
+
+                    st.subheader(
+                        "📊 Advanced Performance Metrics"
+                    )
+
+                    col1, col2, col3 = st.columns(3)
+
+                    col1.metric(
+                        "Profit Factor",
+                        result["performance"]["profit_factor"]
+                    )
+
+                    col2.metric(
+                        "Average Win",
+                        f"₹{result['performance']['average_win']}"
+                    )
+                    col3.metric(
+
+                        "Average Loss",
+                        f"₹{abs(result['performance']['average_loss'])}"
+                    )
+                    col4.metric(
+                        "Expectancy",
+                        f"₹{result['performance']['expectancy']}"
+                    )
+
+
+                    col1, col2, col3 = st.columns(3)
+                    col1.metric(
+                        "Largest Win",
+                        f"₹{result['performance']['largest_win']}"
+                    )
+                    col2.metric(
+                        "Largest Loss",
+                        f"₹{abs(result['performance']['largest_loss'])}"
+                    )
+
+                    col3.metric(
+                        "Realized P/L",
+                        f"₹{result['performance']['total_realized_profit_loss']}"
                     )
 
 
