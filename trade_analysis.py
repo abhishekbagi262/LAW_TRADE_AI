@@ -1,6 +1,4 @@
 from backend.backtesting.backtester import Backtester
-
-
 symbols = [
 
     "RELIANCE.NS",
