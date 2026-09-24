@@ -7,6 +7,7 @@ The project currently evaluates:
 - SMA 20 / SMA 50 trend crossovers
 - RSI
 - MACD
+- MACD+ATR
 - ATR-based risk management
 - Stop loss
 - Take profit
