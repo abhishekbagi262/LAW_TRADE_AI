@@ -22,18 +22,21 @@
             "quantity": 1
         },
         {
+            
             "type": "BUY",
             "symbol": "RELIANCE.NS",
             "price": 1272.2,
             "quantity": 1
         },
         {
+            
             "type": "BUY",
             "symbol": "RELIANCE.NS",
             "price": 1272.2,
             "quantity": 6
         },
         {
+            
             "type": "SELL",
             "symbol": "RELIANCE.NS",
             "price": 1272.2,
@@ -41,18 +44,21 @@
             "profit_loss": -12.3
         },
         {
+            
             "type": "BUY",
             "symbol": "RELIANCE.NS",
             "price": 1272.2,
             "quantity": 1
         },
         {
+            
             "type": "BUY",
             "symbol": "RELIANCE.NS",
             "price": 1272.2,
             "quantity": 1
         },
         {
+            
             "type": "SELL",
             "symbol": "RELIANCE.NS",
             "price": 1272.2,
@@ -60,6 +66,7 @@
             "profit_loss": -1.03
         },
         {
+            
             "type": "SELL",
             "symbol": "RELIANCE.NS",
             "price": 1272.2,
@@ -67,6 +74,7 @@
             "profit_loss": -1.03
         },
         {
+            
             "type": "SELL",
             "symbol": "RELIANCE.NS",
             "price": 1272.2,
@@ -74,6 +82,7 @@
             "profit_loss": -1.03
         },
         {
+            
             "type": "SELL",
             "symbol": "RELIANCE.NS",
             "price": 1272.2,
