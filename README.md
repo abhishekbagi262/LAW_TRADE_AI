@@ -59,3 +59,4 @@ AND
 MACD bullish
 AND
 RSI between 50 and 70
+SMA between 40 and 80
