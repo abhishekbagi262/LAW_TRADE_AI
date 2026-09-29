@@ -18,6 +18,7 @@ The project currently evaluates:
 - Out-of-sample analysis
 - Entry-condition analysis
 - Exposure analysis
+- AI reasoning 
 - Strategy-variant comparison
 - Exit-variant comparison
 - Buy-and-hold benchmarking
