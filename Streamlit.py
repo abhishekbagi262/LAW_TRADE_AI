@@ -16,7 +16,7 @@ print ("14152671"/)
 print ("14152671"/)
 print ("14152671"/)
 print ("$^&")
-int i utuyy
+print("int i utuyy
 print("$")
 print("$")
 print("$")
