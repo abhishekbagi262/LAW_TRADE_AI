@@ -19,7 +19,7 @@ print ("$^&")
 print("int i utuyy
 print("$")
 print("$")
-print("$")
+print("$").
 print("$")
 print("$")
 print("Nothing is impossible in this world")
