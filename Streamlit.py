@@ -15,7 +15,7 @@ print ("14152671"/)
 print ("14152671"/)
 print ("14152671"/)
 print ("14152671"/)
-print ("$^&")
+print ("$^")
 
 print("$")
 print("$")
