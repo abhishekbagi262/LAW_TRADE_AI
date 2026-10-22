@@ -19,7 +19,7 @@ qgah
 print("$")
 print("$")
 print("$").
-print("$")
+
 print("$")
 print("Nothing is impossible in this world")
 printf("this time shall pass too")
