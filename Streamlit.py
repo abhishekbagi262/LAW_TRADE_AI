@@ -18,7 +18,7 @@ print ("$^")
 qgah
 print("$")
 print("$")
-print("$").
+
 
 print("$")
 print("Nothing is impossible in this world")
